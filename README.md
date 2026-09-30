@@ -30,3 +30,17 @@ The Free plan includes 3,000 emails/month, capped at 100/day. Check current pric
 ## Tests
 
 `node --test test.mjs` tests preview, request mapping and failures with a mock transport. `python3 -m unittest test_python.py` checks the Python payload. Neither sends email.
+
+## Agent discovery and recipes
+
+The [public OpenAPI specification](https://sendar.app/openapi.json) and
+[agent reference](https://sendar.app/docs/agent-reference.md) describe authentication,
+limits, idempotency and expected failures. Pricing comes from the application's shared plan definitions.
+
+Run `node recipes.mjs welcome` (or `booking`, `password-reset`, `invoice`, `migration`).
+These recipes use a local mock by default. For an authorized live test set
+`SENDAR_LIVE=1`, `SENDAR_API_KEY`, `SENDAR_FROM`, `SENDAR_TO` and a stable
+`SENDAR_EVENT_ID` (16–128 allowed characters). Reset and invoice recipes also require
+`SENDAR_RESET_URL` or `SENDAR_PAYMENT_URL`. Your application generates and validates
+reset tokens. Recipes never retry automatically. Inspect message history after an
+uncertain result; do not generate a new event key to force another send.
