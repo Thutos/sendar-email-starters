@@ -1,0 +1,3 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import {sendBooking} from './send.mjs';
+test('preview makes no request',async()=>{delete process.env.SENDAR_SEND;assert.equal((await sendBooking(()=>{throw Error('network')})).preview,true)});
+test('mapping and failure',async()=>{Object.assign(process.env,{SENDAR_SEND:'1',SENDAR_API_KEY:'synthetic',SENDAR_FROM:'from@example.com',SENDAR_TO:'to@example.com'});const r=await sendBooking(async(url,opts)=>{assert.equal(url,'https://sendar.app/api/emails');assert.deepEqual(JSON.parse(opts.body).to,['to@example.com']);return {ok:true,json:async()=>({id:1})}});assert.equal(r.id,1);await assert.rejects(()=>sendBooking(async()=>({ok:false,status:429})),/429/);delete process.env.SENDAR_SEND;});
