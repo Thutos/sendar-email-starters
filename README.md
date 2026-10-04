@@ -44,3 +44,7 @@ These recipes use a local mock by default. For an authorized live test set
 `SENDAR_RESET_URL` or `SENDAR_PAYMENT_URL`. Your application generates and validates
 reset tokens. Recipes never retry automatically. Inspect message history after an
 uncertain result; do not generate a new event key to force another send.
+
+## Complete Next.js project
+
+Download [nextjs.zip](nextjs.zip) and extract it to get a runnable, preview-first App Router application with a lockfile, environment example and offline tests. Open `nextjs/README.md` for setup. The full [starter bundle](https://sendar.app/downloads/sendar-starters.zip) also includes this project. The older nextjs-page.tsx remains a copy-in fragment.
